@@ -1,1 +1,1 @@
-const tvArea = document.querySelector("#js-tv-area");
+const tvArea = 
