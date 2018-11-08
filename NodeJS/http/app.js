@@ -8,5 +8,8 @@ http.get(url, (response) => {
     console.log('------------------------')
     console.log(chunk.toString('utf8'))
   });
-  console.log(chunkCount);
+
+  response.on('end', () => {
+    console.log(`res 가 ${chunkCount}개로 나눠졌어요.`)
+  });
 });
