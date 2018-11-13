@@ -15,13 +15,43 @@ const courseSchema = new mongoose.Schema({
 
 const Course = mongoose.model('Course', courseSchema);
 
-const course = new Course({
-  name: '실전 DApp 빌드',
-  author: 'john',
-  tags: ['Ethereum', 'Blockchain', 'DAapp'],
-  isPublished: true
-})
+/* CRUD Operation */
 
-course.save()
-  .then(result => console.log(result))
-  .catch(error => console.error(error));
+async function createCourese() {
+  const course = new Course({
+    name: '실전 DApp 빌드',
+    author: 'john',
+    tags: ['Ethereum', 'Blockchain', 'DAapp'],
+    isPublished: false
+  });
+  try{
+    const result = await course.save();
+    console.log(result)
+  }catch(error) {
+    console.error(error.message);
+  }
+}
+
+async function getCourses() {
+  const courses = await Course
+  //.find({ price: {  $gt: 15}})
+    .find({ isPublished: true}) // find.(); 전체를 가져오는 것 
+    .limit(10)
+    .sort({ name: -1})
+    .select({ name: 1, tags: 1})
+  console.log(courses);
+}
+
+/* 비교 쿼리 연산자
+  $eq (equal)
+  $neq (not equal)
+  $gt (greater than)
+  $gte (greater than or equal to)
+  $lt (less than)
+  $lte
+  $in
+  $nin
+*/
+
+
+getCourses();
