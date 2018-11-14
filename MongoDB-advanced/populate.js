@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 
 mongoose
-  .connect('mongodb://localhost/relation', { useNewUrlParser: true}) //db이름 relation
+  .connect(
+    "mongodb://localhost/relation",
+    { useNewUrlParser: true }
+  ) //db이름 relation
   .then(() => console.log("Connected to MongoDB"))
   .catch(error => console.error(error.message));
 
@@ -42,11 +45,25 @@ async function createAuthor(name, github) {
   }
 }
 
-async function creaateCourse(name, author) {
-  const course = new Course( name, author);
-  const result = await course.save();
-  console.log(result);
+async function createCourse(name, author) {
+  try {
+    const course = new Course({ name, author });
+    const result = await course.save();
+    console.log(result);
+  } catch (error) {
+    console.error(error.message);
+  }
 }
 
-createAuthor('suuuu', 'yeonsuuuu@github.io');
-creaateCourse();
+// createAuthor('suuuu', 'yeonsuuuu@github.io');
+// const id = mongoose.Types.ObjectId("5beba0ff9acdce38505fdcb7");
+// createCourse("MongoDB & Mongoose", id);
+
+async function listCourses() {
+  const courses = await Course
+    .find()
+    .populate('author')
+    .select('name');
+  console.log(courses);
+}
+listCourses();
