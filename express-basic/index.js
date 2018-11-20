@@ -91,15 +91,19 @@ app.put("/api/movies/:id", (req, res) => {
 
 // /* DELETE /api/movies/1 */
 app.delete("/api/movies/:id", (req, res) => {
+  //movies 에서 id로 movie 찾기
   const movie = movies.find(movie => {
     return movie.id === parseInt(req.params.id);
   });
   if (!movie) {
     res
-      .status(404)
-      .send(`Movie with given id(${req.params.id}) is not defined`);
+      .status(404).send(`Movie with given id(${req.params.id}) is not defined`);
   }
-  res.delete(movie);
+
+  const index = movies.indexOf(movie);
+  movies.splice(index, 1);
+
+  res.send(movie);
 });
 
 const port = process.env.PORT || 3000;

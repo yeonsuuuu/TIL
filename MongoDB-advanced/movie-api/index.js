@@ -20,9 +20,7 @@ app.use('/api/genres', genres);
 app.use('/api/movies', movies);
 
 /* Model */
-
 /* Routes */
-
 
 
 /* Server */
